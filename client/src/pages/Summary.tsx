@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Home, Scale, Heart, Shield, RotateCcw, GraduationCap, Stethoscope, Microscope } from "lucide-react";
 import AnimatedText from "@/components/AnimatedText";
 import InteractiveCard from "@/components/InteractiveCard";
@@ -9,9 +9,15 @@ import DeveloperCredits from "@/components/DeveloperCredits";
 
 const Summary = () => {
   const [showCredits, setShowCredits] = useState(false);
+  const [, navigate] = useLocation();
 
   const handleFinishClick = () => {
     setShowCredits(true);
+  };
+
+  const handleCreditsClose = () => {
+    setShowCredits(false);
+    navigate("/");
   };
 
   const whyRegulationMatters = [
@@ -149,22 +155,20 @@ const Summary = () => {
           </div>
           
           <div className="text-center">
-            <Link href="/">
-              <button 
-                onClick={handleFinishClick}
-                className="interactive-button bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-lg sm:text-xl inline-flex items-center space-x-3"
-              >
-                <Home className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span>Finish and Back to Home</span>
-              </button>
-            </Link>
+            <button 
+              onClick={handleFinishClick}
+              className="interactive-button bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-lg sm:text-xl inline-flex items-center space-x-3"
+            >
+              <Home className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span>Finish and Back to Home</span>
+            </button>
           </div>
         </div>
       </div>
       
       <DeveloperCredits 
         isOpen={showCredits} 
-        onClose={() => setShowCredits(false)} 
+        onClose={handleCreditsClose} 
       />
     </PageTransition>
   );
